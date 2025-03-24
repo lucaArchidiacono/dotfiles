@@ -1,5 +1,5 @@
 # PROMPT adjustments
-PROMPT='b1g %F{226}→%f %~: '
+PROMPT='W0RK %F{226}→%f %~: '
 
 # Git autocompletion
 [[ -r "/opt/homebrew/etc/profile.d/bash_completion.sh" ]] && . "/opt/homebrew/etc/profile.d/bash_completion.sh"
@@ -8,44 +8,50 @@ PROMPT='b1g %F{226}→%f %~: '
 autoload -U compinit && compinit
 zstyle ':completion:*' matcher-list 'm:{a-z}={A-Za-z}'
 
-# JAVA HOME SETUP
-export JAVA_HOME="/Library/Java/JavaVirtualMachines/temurin-17.jdk/Contents/Home"
-
 # LOCAL SETUP
-export LOCAL="/Users/lucaarchidiacono/.local"
+export LOCAL="$HOME/.local"
+
+# HOMEBREW SETUP
+export HOMEBREW="/opt/homebrew"
+
+# RANCHER SETUP
+export RANCHER="$HOME/.rd"
 
 # PATH
-export PATH="$LOCAL/bin:/opt/homebrew/bin:$PATH"
-export PATH="$JAVA_HOME/bin:$PATH"
-export PATH="$HOME/.ghcup/bin:$PATH"
+export PATH="$LOCAL/bin:$PATH"
+export PATH="$HOMEBREW/bin:$PATH"
+export PATH="$RANCHER/bin:$PATH"
 export PATH="/usr/local/bin:$PATH"
 
+# Python Environment setup
+export PYENV_ROOT="$HOME/.pyenv"
+[[ -d $PYENV_ROOT/bin ]] && export PATH="$PYENV_ROOT/bin:$PATH"
+eval "$(pyenv init -)"
 
-# Alias for intel computed packages
-#alias ibrew="arch -x86_64 /usr/local/bin/brew"
-#alias ijupyter-lab="/usr/local/bin/jupyter-lab"
+# Fnm Node Environment setup
+eval "$(fnm env --use-on-cd --shell zsh)"
 
-# Helpers
+# Atuin zshrc history
+eval "$(atuin init zsh)"
+export PATH=$PATH:$HOME/.maestro/bin
+
+# Z easier `cd` navigation
+eval "$(zoxide init zsh)"
+
+# Set up fzf key bindings and fuzzy completion
+source <(fzf --zsh)
+
+# Yazi file/folder navigation inside terminal
+function yy() {
+	local tmp="$(mktemp -t "yazi-cwd.XXXXXX")"
+	yazi "$@" --cwd-file="$tmp"
+	if cwd="$(cat -- "$tmp")" && [ -n "$cwd" ] && [ "$cwd" != "$PWD" ]; then
+		cd "$cwd"
+	fi
+	rm -f -- "$tmp"
+}
+
+# Alias
+alias lg='lazygit'
+alias lg-config='vi ~/Library/Application\ Support/lazygit/config.yml'
 alias l="ls -GTahlp"
-alias haskell_REPL="stack ghci"
-alias zhaw="cd /Users/lucaarchidiacono/Library/CloudStorage/Dropbox/Documents/ZHAW"
-
-# >>> conda initialize >>>
-# !! Contents within this block are managed by 'conda init' !!
-__conda_setup="$('/Users/lucaarchidiacono/miniconda/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
-if [ $? -eq 0 ]; then
-    eval "$__conda_setup"
-else
-    if [ -f "/Users/lucaarchidiacono/miniconda/etc/profile.d/conda.sh" ]; then
-        . "/Users/lucaarchidiacono/miniconda/etc/profile.d/conda.sh"
-    else
-        export PATH="/Users/lucaarchidiacono/miniconda/bin:$PATH"
-    fi
-fi
-unset __conda_setup
-# <<< conda initialize <<<
-
-# Enable chruyb and set Ruby Env.
-source /opt/homebrew/opt/chruby/share/chruby/chruby.sh
-source /opt/homebrew/opt/chruby/share/chruby/auto.sh
-chruby ruby-3.2.2
