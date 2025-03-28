@@ -38,3 +38,7 @@ brew install fnm
 
 # Install atuin
 brew install atuin
+
+# Install border highlight
+brew tap FelixKratz/formulae
+brew install borders
