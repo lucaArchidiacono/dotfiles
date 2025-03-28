@@ -132,9 +132,12 @@ automatically-unhide-macos-hidden-apps = false
     alt-9 = 'workspace 9'
     alt-b = 'workspace Browser'
     alt-x = 'workspace Xcode'
-    alt-v = 'workspace VSC'
-    alt-c = 'workspace Cursor'
+    alt-c = 'workspace Code'
     alt-t = 'workspace Terminal'
+    alt-m = 'workspace Music'
+    alt-p = 'workspace Password'
+    alt-s = 'workspace Settings'
+    alt-u = 'workspace Utilities'
 
     # See: https://nikitabobko.github.io/AeroSpace/commands#move-node-to-workspace
     alt-shift-1 = 'move-node-to-workspace 1'
@@ -148,9 +151,11 @@ automatically-unhide-macos-hidden-apps = false
     alt-shift-9 = 'move-node-to-workspace 9'
     alt-shift-b = 'move-node-to-workspace Browser'
     alt-shift-x = 'move-node-to-workspace Xcode'
-    alt-shift-v = 'move-node-to-workspace VSC'
-    alt-shift-c = 'move-node-to-workspace Cursor'
+    alt-shift-c = 'move-node-to-workspace Code'
     alt-shift-t = 'move-node-to-workspace Terminal'
+    alt-shift-m = 'move-node-to-workspace Music'
+    alt-shift-s = 'move-node-to-workspace Settings'
+    alt-shift-u = 'move-node-to-workspace Utilities'
 
     # See: https://nikitabobko.github.io/AeroSpace/commands#workspace-back-and-forth
     alt-tab = 'workspace-back-and-forth'
