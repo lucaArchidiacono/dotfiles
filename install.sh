@@ -42,3 +42,9 @@ brew install atuin
 # Install border highlight
 brew tap FelixKratz/formulae
 brew install borders
+
+# Install neovim
+brew install neovim
+
+# Clone repos
+git clone https://github.com/lucaArchidiacono/kickstart.nvim.git "${XDG_CONFIG_HOME:-$HOME/.config}"/nvim
