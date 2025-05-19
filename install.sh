@@ -46,5 +46,5 @@ brew install borders
 # Install neovim
 brew install neovim
 
-# Clone repos
-git clone https://github.com/lucaArchidiacono/kickstart.nvim.git "${XDG_CONFIG_HOME:-$HOME/.config}"/nvim
+# Install xcode-build-server to communicate swift-lsp with xcode
+brew install xcode-build-server
