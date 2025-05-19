@@ -508,7 +508,7 @@ require('lazy').setup({
       -- Allows extra capabilities provided by blink.cmp
       'saghen/blink.cmp',
     },
-    config = function()
+    config = function(_, opts)
       -- Brief aside: **What is LSP?**
       --
       -- LSP is an initialism you've probably heard, but might not understand what it is.
@@ -676,6 +676,58 @@ require('lazy').setup({
       --  When you add blink.cmp, luasnip, etc. Neovim now has *more* capabilities.
       --  So, we create new capabilities with blink.cmp, and then broadcast that to the servers.
       local capabilities = require('blink.cmp').get_lsp_capabilities()
+
+      local lspconfig = require 'lspconfig'
+      lspconfig.sourcekit.setup {
+        capabilities = capabilities,
+        on_attach = function(_, bufnr)
+          vim.keymap.set('n', 'K', vim.lsp.buf.hover, { noremap = true, silent = true })
+          vim.keymap.set('n', 'gd', vim.lsp.buf.definition, { noremap = true, silent = true })
+
+          opts.buffer = bufnr
+
+          -- set keybindings
+          opts.desc = 'Show LSP definitions'
+          vim.keymap.set('n', 'gd', '<cmd>Telescope lsp_definitions trim_text=true<cr>', opts)
+
+          opts.desc = 'Show LSP definitions in split'
+          vim.keymap.set('n', 'gD', '<cmd>vsplit | Telescope lsp_definitions trim_text=true<cr>', opts)
+
+          opts.desc = 'Show LSP references'
+          vim.keymap.set('n', 'gr', '<cmd>Telescope lsp_references trim_text=true include_declaration=false<cr>', opts)
+
+          opts.desc = 'Show LSP implementation'
+          vim.keymap.set('n', 'gi', '<cmd>Telescope lsp_implementations<cr>', opts)
+
+          opts.desc = 'Show LSP code actions'
+          vim.keymap.set({ 'n', 'v' }, '<leader>ca', vim.lsp.buf.code_action, opts)
+
+          opts.desc = 'Smart rename'
+          vim.keymap.set('n', '<leader>rn', vim.lsp.buf.rename, opts)
+
+          opts.desc = 'Show buffer diagnostics'
+          vim.keymap.set('n', '<leader><leader>d', '<cmd>Telescope diagnostics bufnr=0<CR>', opts)
+
+          opts.desc = 'Go to previous diagnostic'
+          vim.keymap.set('n', '[d', function()
+            vim.diagnostic.jump { count = -1 }
+            vim.cmd 'normal! zz'
+          end, opts)
+
+          opts.desc = 'Go to next diagnostic'
+          vim.keymap.set('n', ']d', function()
+            vim.diagnostic.jump { count = 1 }
+            vim.cmd 'normal! zz'
+          end, opts)
+
+          opts.desc = 'Show documentation for what is under cursor'
+          vim.keymap.set('n', 'K', vim.lsp.buf.hover, opts)
+
+          opts.desc = 'Restart LSP'
+          vim.keymap.set('n', '<leader>rl', ':LspRestart | LspStart<CR>', opts)
+        end,
+        cmd = 'sourcekit' and { vim.trim(vim.fn.system 'xcrun -f sourcekit-lsp') } or nil,
+      }
 
       -- Enable the following language servers
       --  Feel free to add/remove any LSPs that you want here. They will automatically be installed.
@@ -870,7 +922,7 @@ require('lazy').setup({
       },
 
       sources = {
-        default = { 'lsp', 'path', 'snippets', 'lazydev' },
+        default = { 'lsp', 'path', 'snippets', 'lazydev', 'buffer' },
         providers = {
           lazydev = { module = 'lazydev.integrations.blink', score_offset = 100 },
         },
