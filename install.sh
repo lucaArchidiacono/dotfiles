@@ -15,7 +15,7 @@ gh extension install dlvhdr/gh-dash
 brew install fzf
 
 # Install Aerospace window manager
-brew brew install --cask nikitabobko/tap/aerospace
+brew install --cask nikitabobko/tap/aerospace
 
 # Install ghostty terminal
 brew install --cask ghostty
