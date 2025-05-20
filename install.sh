@@ -8,6 +8,8 @@ brew install bash-completion
 
 # Install gh -> command line tool from github
 brew install gh
+# Install extension to gh-cli
+gh extension install dlvhdr/gh-dash
 
 # Install fuzzy search tool
 brew install fzf
@@ -21,8 +23,10 @@ brew install --cask ghostty
 # Install zoxide -> smarter `cd`
 brew install zoxide
 
-# Install new fonts (better looking yazi)
+# Install new symbol-fonts (better looking yazi)
 brew install font-symbols-only-nerd-font
+# Install new fonts
+brew install font-hack-nerd-font
 
 # Install FFMPEG -> always needed
 brew install ffmpeg
@@ -48,3 +52,6 @@ brew install neovim
 
 # Install xcode-build-server to communicate swift-lsp with xcode
 brew install xcode-build-server
+
+# Install Multiplexing manager
+brew install tmux
