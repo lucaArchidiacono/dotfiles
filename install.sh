@@ -8,6 +8,7 @@ brew install bash-completion
 
 # Install gh -> command line tool from github
 brew install gh
+gh auth login
 # Install extension to gh-cli
 gh extension install dlvhdr/gh-dash
 
@@ -42,10 +43,12 @@ brew install fnm
 
 # Install atuin
 brew install atuin
+brew services start atuin
 
 # Install border highlight
 brew tap FelixKratz/formulae
 brew install borders
+brew services start felixkratz/formulae/borders
 
 # Install neovim
 brew install neovim
